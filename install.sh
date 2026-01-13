@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# Dotfiles installer - Claude Code setup
-
-echo "==> Installing Claude Code..."
-
 # Check if npm is available
 if ! command -v npm &> /dev/null; then
     echo "npm not found. Installing Node.js via nvm..."
@@ -26,5 +22,12 @@ fi
 # Install Claude Code globally
 npm install -g @anthropic-ai/claude-code
 
-echo "==> Claude Code installed successfully!"
-echo "Run 'claude' to start using Claude Code."
+
+_exts=(
+  anthropic.claude-code
+  eamodio.gitlens
+)
+
+for _ext in "${_exts[@]}"; do
+  cursor --install-extension "$_ext";
+done
