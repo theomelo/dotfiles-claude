@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 set -e
 
+# Install Homebrew for Linux if not present
+if ! command -v brew &> /dev/null; then
+    echo "Homebrew not found. Installing Homebrew for Linux..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Add Homebrew to PATH for Linux
+    if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    elif [ -d "$HOME/.linuxbrew" ]; then
+        eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+    fi
+fi
+
+# Install glib using Homebrew
+echo "Installing glib via Homebrew..."
+brew install glib
+
 # Check if npm is available
 if ! command -v npm &> /dev/null; then
     echo "npm not found. Installing Node.js via nvm..."
