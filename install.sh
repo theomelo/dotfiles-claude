@@ -45,6 +45,10 @@ _exts=(
   eamodio.gitlens
 )
 
-for _ext in "${_exts[@]}"; do
-  cursor --install-extension "$_ext";
-done
+if command -v cursor &> /dev/null; then
+  for _ext in "${_exts[@]}"; do
+    cursor --install-extension "$_ext";
+  done
+else
+  echo "cursor CLI not found, skipping extension installation"
+fi
