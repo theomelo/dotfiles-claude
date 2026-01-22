@@ -9,8 +9,12 @@ if ! command -v brew &> /dev/null; then
     # Add Homebrew to PATH for Linux
     if [ -d "/home/linuxbrew/.linuxbrew" ]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        # Persist to .bashrc for future sessions
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/coder/.bashrc
     elif [ -d "$HOME/.linuxbrew" ]; then
         eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+        # Persist to .bashrc for future sessions
+        echo 'eval "$($HOME/.linuxbrew/bin/brew shellenv bash)"' >> "$HOME/.bashrc"
     fi
 fi
 
