@@ -18,9 +18,13 @@ if ! command -v brew &> /dev/null; then
     fi
 fi
 
-# Install glib using Homebrew
-echo "Installing glib via Homebrew..."
-brew install glib
+# Install glab using Homebrew
+echo "Installing glab via Homebrew..."
+brew install glab
+
+# Install Git AI
+echo "Installing Git AI..."
+curl -sSL https://usegitai.com/install.sh | bash
 
 # Check if npm is available
 if ! command -v npm &> /dev/null; then
