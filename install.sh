@@ -47,6 +47,32 @@ fi
 # Install Claude Code globally
 npm install -g @anthropic-ai/claude-code
 
+# --- Playwright with headless Chromium ---
+# /home/coder/ is a persistent volume, so playwright-tools/ and
+# .cache/ms-playwright/ survive workspace rebuilds. System packages
+# (apt) do not, so we reinstall them idempotently on every run.
+
+# 1. Install system deps for headless Chromium (lost on workspace rebuild)
+if ! dpkg -s libgbm1 >/dev/null 2>&1; then
+    echo "Installing system dependencies for headless Chromium..."
+    if [ -d /home/coder/playwright-tools/node_modules/playwright ]; then
+        cd /home/coder/playwright-tools && npx playwright install-deps chromium
+    else
+        # System deps will be installed after playwright is set up below
+        :
+    fi
+fi
+
+# 2. If playwright-tools dir is missing (fresh workspace), set it up
+if [ ! -d /home/coder/playwright-tools/node_modules/playwright ]; then
+    echo "Setting up Playwright tools..."
+    mkdir -p /home/coder/playwright-tools
+    cd /home/coder/playwright-tools
+    npm init -y
+    npm install playwright
+    npx playwright install --with-deps chromium
+fi
+
 
 _exts=(
   anthropic.claude-code
